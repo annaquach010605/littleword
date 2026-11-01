@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5f3e9" />
+  <meta name="description" content="My Little World — thế giới 3D nhỏ của riêng bạn: trồng cây, nuôi gà, xây vườn và khám phá." />
+  <title>My Little World · Cozy Sandbox</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main id="gameRoot">
+    <div id="viewport" aria-label="Thế giới My Little World 3D"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="topbar">
+      <div class="brand"><span class="brand-flower">✿</span><span>MY LITTLE WORLD</span><small>early access · v0.1</small></div>
+      <div class="top-stats" aria-label="Thông tin người chơi">
+        <span class="pill coins">🪙 <b id="coinsValue">120</b></span>
+        <span class="pill level">✦ Lv.<b id="levelValue">1</b></span>
+        <span class="pill phase" id="timeLabel">☀️ Buổi sáng</span>
+      </div>
+    </div>
+    <section class="left-panel" aria-label="Nhật ký hành trình">
+      <div class="eyebrow">NHẬT KÝ CỦA BẠN</div>
+      <h1>Chào mừng về nhà <span>🌼</span></h1>
+      <p>Bắt đầu bằng một chút chăm vườn, rồi khám phá thế giới theo cách của bạn.</p>
+      <div class="exp-label"><span>Tiến độ cấp độ</span><b id="xpLabel">0 / 100 XP</b></div>
+      <div class="progress"><div id="xpBar"></div></div>
+      <button id="questsButton" class="quest-mini" type="button">📜 <span>Nhiệm vụ nhỏ hôm nay</span><span aria-hidden="true">↗</span></button>
+    </section>
+    <div id="centerCrosshair" aria-hidden="true">·</div>
+    <div class="nearby-card" id="nearbyCard" aria-live="polite">
+      <span class="nearby-icon" id="nearbyIcon">🌱</span>
+      <span><strong id="nearbyTitle">Khám phá khu vườn</strong><small id="nearbyHint">WASD để di chuyển · rê chuột để nhìn quanh</small></span>
+      <button type="button" id="interactButton" disabled>Phím E · Tương tác</button>
+    </div>
+    <div class="bottom-hud" aria-label="Túi đồ và chức năng">
+      <div class="quick-inventory">
+        <div class="slot"><span>🌱</span><b id="seedCount">6</b><small>Hạt giống</small></div>
+        <div class="slot"><span>🥕</span><b id="carrotCount">0</b><small>Cà rốt</small></div>
+        <div class="slot"><span>🥚</span><b id="eggCount">0</b><small>Trứng</small></div>
+        <div class="slot"><span>🍎</span><b id="appleCount">0</b><small>Táo</small></div>
+      </div>
+      <div class="actions">
+        <button type="button" id="shopButton" title="Cửa hàng (B)">🛒 <span>Cửa hàng</span></button>
+        <button type="button" id="buildButton" title="Trang trí (H)">🪴 <span>Trang trí</span></button>
+        <button type="button" id="viewButton" title="Đổi góc nhìn (V)">🎥 <span>Góc nhìn</span></button>
+        <button type="button" id="saveButton" title="Lưu tiến độ">💾 <span>Lưu game</span></button>
+        <button type="button" id="helpButton" title="Hướng dẫn">❔</button>
+      </div>
+    </div>
+    <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+    <div class="movement" aria-label="Điều khiển cảm ứng">
+      <button type="button" data-move="w" aria-label="Tiến">▲</button>
+      <div><button type="button" data-move="a" aria-label="Sang trái">◀</button><button type="button" data-move="s" aria-label="Lùi">▼</button><button type="button" data-move="d" aria-label="Sang phải">▶</button></div>
+    </div>
+    <div class="modal-backdrop hidden" id="modalBackdrop">
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header"><div><span class="eyebrow" id="modalKicker">MY LITTLE WORLD</span><h2 id="modalTitle">Chào mừng!</h2></div><button type="button" id="closeModal" class="close" aria-label="Đóng">✕</button></div>
+        <div id="modalContent"></div>
+      </section>
+    </div>
+    <div class="loading-screen" id="loadingScreen" role="status" aria-live="polite">
+      <div class="loading-card"><div class="loading-flower">✿</div><span class="eyebrow">WELCOME TO YOUR LITTLE ESCAPE</span><h2>My Little World</h2><p id="loadingMessage">Đang dựng khu vườn nhỏ của bạn...</p><div class="loading-line"><i></i></div><button class="hidden" id="retryButton" type="button" onclick="location.reload()">Thử tải lại</button></div>
+    </div>
+  </main>
+  <script type="module">
+    import('./game.js').catch(error => {
+      console.error('My Little World failed to load:', error);
+      document.getElementById('loadingMessage').textContent = 'Không tải được thư viện 3D. Hãy kiểm tra Internet, thử lại hoặc mở game trên GitHub Pages.';
+      document.querySelector('.loading-line').classList.add('hidden');
+      document.getElementById('retryButton').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
